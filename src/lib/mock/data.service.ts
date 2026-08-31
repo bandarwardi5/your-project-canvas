@@ -58,9 +58,10 @@ export const users: User[] = arabicNames.map((name, i) => ({
   level: 3 + ((i * 5) % 42),
   vip: at((["none", "silver", "gold", "noble"] as const), i),
   verified: i % 3 === 0,
-  status: (["active", "active", "active", "temp_banned", "perm_banned", "device_banned"] as const)[
-    i % 6
-  ],
+  status: at(
+    ["active", "active", "active", "temp_banned", "perm_banned", "device_banned"] as const,
+    i,
+  ),
   country: at(countries, i),
   joinedAt: `2026-0${(i % 8) + 1}-${10 + (i % 18)}`,
 }));
