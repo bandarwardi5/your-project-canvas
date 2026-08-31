@@ -22,6 +22,9 @@ import type {
 
 const delay = <T,>(data: T): Promise<T> => Promise.resolve(data);
 
+/** فهرسة دائرية آمنة للأنواع */
+const at = <T,>(arr: readonly T[], i: number): T => at(arr, i) as T;
+
 const arabicNames = [
   "نورة القحطاني",
   "بندر العتيبي",
@@ -53,12 +56,12 @@ export const users: User[] = arabicNames.map((name, i) => ({
   coins: 4200 + i * 8130,
   beans: 1200 + i * 5400,
   level: 3 + ((i * 5) % 42),
-  vip: (["none", "silver", "gold", "noble"] as const)[i % 4],
+  vip: at((["none", "silver", "gold", "noble"] as const), i),
   verified: i % 3 === 0,
   status: (["active", "active", "active", "temp_banned", "perm_banned", "device_banned"] as const)[
     i % 6
   ],
-  country: countries[i % countries.length],
+  country: at(countries, i),
   joinedAt: `2026-0${(i % 8) + 1}-${10 + (i % 18)}`,
 }));
 
@@ -69,9 +72,9 @@ export const verificationRequests: VerificationRequest[] = arabicNames
     userName: name,
     username: `@user_${1000 + i}`,
     followers: 24000 + i * 51000,
-    category: ["فنان", "رياضي", "مؤثر", "إعلامي", "موسيقي"][i % 5],
+    category: at(["فنان", "رياضي", "مؤثر", "إعلامي", "موسيقي"], i),
     submittedAt: `2026-08-${12 + i}`,
-    status: (["pending", "pending", "approved", "rejected"] as const)[i % 4],
+    status: at((["pending", "pending", "approved", "rejected"] as const), i),
   }));
 
 export const agencies: Agency[] = [
@@ -83,12 +86,12 @@ export const agencies: Agency[] = [
 
 export const streams: Stream[] = arabicNames.slice(0, 12).map((name, i) => ({
   id: `S-${500 + i}`,
-  title: ["دردشة مسائية", "تحدي الغناء", "بث ألعاب PUBG", "جلسة شعر", "توب لايف", "منافسة PK"][i % 6],
+  title: at(["دردشة مسائية", "تحدي الغناء", "بث ألعاب PUBG", "جلسة شعر", "توب لايف", "منافسة PK"], i),
   streamer: name,
   viewers: 320 + i * 917,
   giftsValue: 1500 + i * 3400,
   durationMin: 25 + i * 13,
-  category: ["ترفيه", "غناء", "ألعاب", "ثقافة"][i % 4],
+  category: at(["ترفيه", "غناء", "ألعاب", "ثقافة"], i),
   flagged: i % 5 === 0,
   thumbHue: (i * 53) % 360,
 }));
@@ -140,30 +143,30 @@ export const transactions: Transaction[] = arabicNames.slice(0, 10).map((name, i
   user: name,
   amount: 49 + i * 137,
   coins: 5000 + i * 12000,
-  method: (["Apple Pay", "Google Play", "بطاقة بنكية", "محفظة إلكترونية"] as const)[i % 4],
-  status: (["مكتملة", "مكتملة", "قيد المعالجة", "فاشلة"] as const)[i % 4],
+  method: at((["Apple Pay", "Google Play", "بطاقة بنكية", "محفظة إلكترونية"] as const), i),
+  status: at((["مكتملة", "مكتملة", "قيد المعالجة", "فاشلة"] as const), i),
   date: `2026-08-${14 + i}`,
 }));
 
 export const cashoutRequests: CashoutRequest[] = arabicNames.slice(0, 8).map((name, i) => ({
   id: `CO-${300 + i}`,
-  requester: i % 3 === 0 ? agencies[i % agencies.length].name : name,
+  requester: i % 3 === 0 ? at(agencies, i).name : name,
   type: i % 3 === 0 ? "وكالة" : "مذيع",
   beans: 40000 + i * 23000,
   amountUsd: 400 + i * 230,
-  method: ["تحويل بنكي", "PayPal", "Wise"][i % 3],
-  status: (["قيد المراجعة", "قيد المراجعة", "تم التحويل", "مرفوض"] as const)[i % 4],
+  method: at(["تحويل بنكي", "PayPal", "Wise"], i),
+  status: at((["قيد المراجعة", "قيد المراجعة", "تم التحويل", "مرفوض"] as const), i),
   date: `2026-08-${16 + i}`,
 }));
 
 export const reports: Report[] = arabicNames.slice(0, 9).map((name, i) => ({
   id: `R-${700 + i}`,
   target: i % 2 === 0 ? `بث #${500 + i}` : name,
-  targetType: (["بث", "رسالة", "حساب"] as const)[i % 3],
-  reason: ["محتوى غير لائق", "تحريض وكراهية", "انتحال شخصية", "إعلانات مزعجة", "احتيال"][i % 5],
+  targetType: at((["بث", "رسالة", "حساب"] as const), i),
+  reason: at(["محتوى غير لائق", "تحريض وكراهية", "انتحال شخصية", "إعلانات مزعجة", "احتيال"], i),
   reporter: `@user_${1200 + i}`,
   date: `2026-08-${20 + (i % 9)}`,
-  status: (["جديد", "تحت المراجعة", "مغلق"] as const)[i % 3],
+  status: at((["جديد", "تحت المراجعة", "مغلق"] as const), i),
 }));
 
 export const bannedWords = [
