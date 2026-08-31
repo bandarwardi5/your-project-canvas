@@ -23,7 +23,7 @@ import type {
 const delay = <T,>(data: T): Promise<T> => Promise.resolve(data);
 
 /** فهرسة دائرية آمنة للأنواع */
-const at = <T,>(arr: readonly T[], i: number): T => at(arr, i) as T;
+const at = <T,>(arr: readonly T[], i: number): T => arr[i % arr.length] as T;
 
 const arabicNames = [
   "نورة القحطاني",
@@ -116,8 +116,8 @@ export const storeItems: StoreItem[] = [
 export const levels: LevelRow[] = Array.from({ length: 10 }, (_, i) => ({
   level: (i + 1) * 5,
   xp: (i + 1) * 12500,
-  badge: ["🥉", "🥈", "🥇", "💎", "👑", "🔥", "⚡", "🌟", "🛡️", "🏆"][i],
-  reward: [
+  badge: at(["🥉", "🥈", "🥇", "💎", "👑", "🔥", "⚡", "🌟", "🛡️", "🏆"], i),
+  reward: at([
     "إطار برونزي",
     "500 عملة",
     "إطار فضي",
@@ -128,7 +128,7 @@ export const levels: LevelRow[] = Array.from({ length: 10 }, (_, i) => ({
     "مركب حصري",
     "شارة أسطورية",
     "10,000 عملة",
-  ][i],
+  ], i),
   track: i % 2 === 0 ? "supporter" : "streamer",
 }));
 
